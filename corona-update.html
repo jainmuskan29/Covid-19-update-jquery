@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid-19 Update</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- JavaScript Bundle with Popper -->
+    
+    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script> -->
+
+    <Style>
+        .corona-rot img {
+            animation: gocorona 3s linear infinite;
+        }
+
+        @keyframes gocorona {
+            0% {
+                transform: rotate(0);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .leftside img {
+            animation: heartbeat 5s linear infinite;
+
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(.75);
+            }
+
+            20% {
+                transform: scale(1);
+            }
+
+            40% {
+                transform: scale(.75);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+
+            80% {
+                transform: scale(.75);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .navbar-background {
+            background-color: #b55289;
+        }
+    </Style>
+
+
+
+
+</head>
+
+<body onload="fetch()">
+
+
+
+
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light navbar-background p-3">
+        <a class="navbar-brand pl-5" href="#">Covid-19</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto pr-5 text-capitalize">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Symtoms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Prevention</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="main-header container-fluid">
+        <div class="row w-100 h-100">
+            <div class="col-lg-5 col-md-7 col-12 order-lg-1 order-2 mt-5">
+                <div class="leftside w-100 h-100 d-flex justify-content-center align-items-center ">
+                    <img src="unity.png" alt="corona-img" width="300" height="300">
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-12 order-lg-2 order-1 mt-5">
+                <div class="rightside w-100 h-100 d-flex justify-content-center align-items-center">
+                    <h1>Lets Stay Safe & Fight Together Against Cor <span class="corona-rot"> <img src="corona-1.png"
+                                height="100" width="100" alt="corona spin image"> </span> na Virus</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <section class="corona_update container-fluid">
+        <div class="table table-resposive">
+            <table class="table table-ordered table-striped text-center" id="tbval">
+                <tr>
+                    <th>Country</th>
+                    <th>Totalconfirmed</th>
+                    <th>NewDeaths</th>
+                    <th>TotalDeaths</th>
+                    <th>NewRecovered</th>
+                    <th>TotalRecovered</th>
+                    <th>Date</th>
+                </tr>
+
+            </table>
+        </div>
+    </section>
+    <script>
+        function fetch() {
+            $.get("https://api.covid19api.com/summary",
+                function (data) {
+                    console.log(data['Countries'].length);
+                    var tbval = document.getElementById('tbval');
+
+                    for (var i = 1; i < (data['Countries'].length); i++) {
+                        var x = tbval.insertRow();
+                        x.insertCell(0);
+
+                        tbval.rows[i].cells[0].innerHTML = data['Countries'][i - 1]['Country'];
+                        tbval.rows[i].cells[0].style.background = 'blue';
+                        tbval.rows[i].cells[0].style.color = 'white';
+
+                        x.insertCell(1);
+
+                        tbval.rows[i].cells[1].innerHTML = data['Countries'][i - 1]['TotalConfirmed'];
+                        tbval.rows[i].cells[1].style.background = 'pink';
+
+                        x.insertCell(2);
+
+                        tbval.rows[i].cells[2].innerHTML = data['Countries'][i - 1]['NewDeaths'];
+                        tbval.rows[i].cells[2].style.background = 'red';
+
+                        x.insertCell(3);
+                        tbval.rows[i].cells[3].innerHTML = data['Countries'][i - 1]['TotalDeaths'];
+                        tbval.rows[i].cells[3].style.background = 'purple';
+
+                        x.insertCell(4);
+
+                        tbval.rows[i].cells[4].innerHTML = data['Countries'][i - 1]['NewRecovered'];
+                        tbval.rows[i].cells[4].style.background = 'green';
+
+                        x.insertCell(5);
+
+                        tbval.rows[i].cells[5].innerHTML = data['Countries'][i - 1]['TotalRecovered'];
+                        tbval.rows[i].cells[5].style.background = 'yellow';
+
+                        x.insertCell(6);
+
+                        tbval.rows[i].cells[6].innerHTML = data['Countries'][i - 1]['Date'];
+                        tbval.rows[i].cells[6].style.background = 'gray';
+
+                    }
+                }
+            )
+        }
+    </script>
+
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script> -->
+
+
+
+        
+</body>
+
+</html>
